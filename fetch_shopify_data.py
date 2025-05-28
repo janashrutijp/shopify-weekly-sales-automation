@@ -7,26 +7,26 @@ import requests
 from requests.adapters import HTTPAdapter
 
 
-# Custom HTTPS adapter to enforce TLSv1.2
-class TLSAdapter(HTTPAdapter):
-    def init_poolmanager(self, *args, **kwargs):
-        context = ssl.create_default_context()
-        context.minimum_version = ssl.TLSVersion.TLSv1_2
+#  when ran without this, got an error in TLSAdapter)
+#  so here i'm customising HTTPS adapter to enforce TLSv1.2
+
+class TLSAdapter(HTTPAdapter):  #  controls how requests makes connections
+    def init_poolmanager(self, *args, **kwargs):  #  overriden to inject a custom SSL context
+        context = ssl.create_default_context()  #  to create a secure SSL configuration
+        context.minimum_version = ssl.TLSVersion.TLSv1_2  #  enforces TLSv1.2
         kwargs['ssl_context'] = context
-        return super().init_poolmanager(*args, **kwargs)
+        return super().init_poolmanager(*args, **kwargs)  #  returns
 
 
 def fetch_orders():
     print("📥 Fetching data...")
-
-    # Update this with your actual credentials
-    shop_url = os.getenv("https://erode-clothing.myshopify.com")
-    access_token = os.getenv("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")  # Replace this with your private app's access token
+    shop_url = "xxxxxxxxx"
+    access_token = "xxxxxxxxxx"
 
     endpoint = "/admin/api/2023-07/orders.json"
     base_url = shop_url + endpoint
 
-    # Get orders from the past 7 days
+    # getting orders from past week
     created_at_min = (datetime.utcnow() - timedelta(days=7)).isoformat()
 
     headers = {
@@ -52,7 +52,7 @@ def fetch_orders():
             print("❌ No orders found in response.")
             return pd.DataFrame()
 
-        # Normalize to DataFrame
+        # normalising dataframe
         df = pd.json_normalize(data['orders'])
         print(f"✅ {len(df)} orders fetched.")
         return df
