@@ -1,4 +1,3 @@
-# api details.py
 import os
 
 SHOPIFY_API_KEY = "xxxxxxxxxxxx"
