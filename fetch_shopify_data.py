@@ -1,7 +1,6 @@
 import os
 import ssl
 from datetime import datetime, timedelta
-
 import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
@@ -19,7 +18,7 @@ class TLSAdapter(HTTPAdapter):  #  controls how requests makes connections
 
 
 def fetch_orders():
-    print("📥 Fetching data...")
+    print("Fetching data...")
     shop_url = "xxxxxxxxx"
     access_token = "xxxxxxxxxx"
 
@@ -49,21 +48,21 @@ def fetch_orders():
         data = response.json()
 
         if 'orders' not in data:
-            print("❌ No orders found in response.")
+            print("‼️ No orders found in response.")
             return pd.DataFrame()
 
         # normalising dataframe
         df = pd.json_normalize(data['orders'])
-        print(f"✅ {len(df)} orders fetched.")
+        print(f"🕊️ {len(df)} orders fetched.")
         return df
 
     except requests.exceptions.SSLError as e:
-        print("❌ SSL Error:", e)
+        print("‼️ SSL Error:", e)
     except requests.exceptions.HTTPError as e:
-        print("❌ HTTP Error:", e)
+        print("‼️ HTTP Error:", e)
     except requests.exceptions.RequestException as e:
-        print("❌ Request Failed:", e)
+        print("‼️ Request Failed:", e)
     except Exception as e:
-        print("❌ Unexpected Error:", e)
+        print("‼️ Unexpected Error:", e)
 
     return pd.DataFrame()
