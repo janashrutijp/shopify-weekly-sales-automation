@@ -21,4 +21,4 @@ def send_email_with_pdf(subject: object, body: object, attachment_path: object) 
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
 
-    print("📧 Email sent to the company!")
+    print("🗣️ Email sent to the company!")
