@@ -1,5 +1,3 @@
-# email_report.py
-
 import smtplib
 from email.message import EmailMessage
 from credentials import EMAIL_ADDRESS, EMAIL_PASSWORD, MANAGER_EMAIL
